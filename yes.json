@@ -1,0 +1,781 @@
+{
+  "character": {
+    "info": {
+      "name": "Yes",
+      "level": 20,
+      "exp": 21750,
+      "karma": 16
+    },
+    "stats": {
+      "MAX_HP": 55,
+      "FOR": 30,
+      "RES": 30,
+      "INT": 30,
+      "SOR": 30,
+      "CAR": 21,
+      "VEL": 29,
+      "move_speed": 15,
+      "weapon_mastery": "1d20 + 1d20 + 1d4",
+      "def_die": "1d20"
+    },
+    "equipment": [
+      {
+        "name": "Luck Tatoo",
+        "category": "Tatoo",
+        "stat_plus": {
+          "SOR": 1
+        },
+        "description": "Luck Tatoo on right hand"
+      },
+      {
+        "name": "Strength Tatoo",
+        "category": "Tatoo",
+        "stat_plus": {
+          "FOR": 1
+        },
+        "description": "Strength Tatoo on right arm"
+      },
+      {
+        "category": "bless",
+        "name": "Great Worm's Blessing",
+        "stat_plus": {
+          "SOR": 1
+        },
+        "description": "Blessing acquired after slaying the Great Worm"
+      },
+      {
+        "category": "bless",
+        "name": "Green Dragon's Blessing",
+        "stat_plus": {
+          "SOR": 1
+        },
+        "description": "Blessing acquired after slaying the Green Dragon"
+      },
+      {
+        "category": "wearable",
+        "name": "Glavoilian Arm",
+        "stat_plus": {
+          "VEL": 1
+        },
+        "hooks": [
+          {
+            "atk_bonus": {
+              "condition": "electric_attack",
+              "roll": "1d6 + 3d4"
+            }
+          }
+        ],
+        "description": ""
+      },
+      {
+        "category": "wearable",
+        "name": "Wolf's Hat",
+        "stat_plus": {
+          "SOR": 3,
+          "move_speed": 1.5
+        },
+        "hooks": [
+          {
+            "def_bonus": {
+              "roll": "1d12"
+            }
+          }
+        ],
+
+        "description": "Wolf's Hat wore by the greatest of all"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Double Black Wings Attack",
+        "category": "attack",
+        "dmg_type": "slash",
+        "distance": "melee",
+        "base_stat": "FOR",
+        "roll": "FOR + weapon_mastery + 26d8"
+      },
+      {
+        "name": "Luck Dagger Attack",
+        "category": "attack",
+        "dmg_type": "pierce",
+        "distance": "melee",
+        "base_stat": "SOR",
+        "roll": "SOR + weapon_mastery + 2d10 + 12 + 2d6"
+      },
+      {
+        "name": "Str Dagger Attack",
+        "category": "attack",
+        "dmg_type": "pierce",
+        "distance": "melee",
+        "base_stat": "FOR",
+        "roll": "FOR + weapon_mastery + 2d10 + 12 + 2d6"
+      },
+      {
+        "name": "Defend",
+        "category": "defense",
+        "roll": "RES + def_die"
+      },
+      {
+        "name": "XDefense",
+        "category": "defense",
+        "roll": "RES + def_die + 12 + 2d6 + d20"
+      },
+      {
+        "name": "SurpriseDefend",
+        "category": "defense",
+        "roll": "RES + 1d4"
+      },
+      {
+        "name": "SurpriseXDefense",
+        "category": "defense",
+        "roll": "RES + 1d4 + 12 + 2d6 + d20"
+      },
+      {
+        "name": "DesVelocidade",
+        "category": "test",
+        "roll": "d20 + 11"
+      }
+    ],
+    "spells": [
+      {
+        "name": "Fúria",
+        "description": "Dano Bonus em ataques corpo a corpo baseados em força, vantagem defesa sem armadura e teste de força. +1 ataque bônus.",
+        "action_type": "bonus_action",
+        "level": 7,
+        "category": "buff",
+        "uses": 4,
+        "duration": 3,
+        "hooks": [
+          {
+            "atk_bonus": {
+              "condition": "FOR_atk",
+              "roll": "1d6 + 3d4"
+            }
+          },
+          {
+            "extra_atk": {
+              "keep": true,
+              "qt": 1
+            }
+          },
+          {
+            "def_adv": {}
+          },
+          {
+            "heal": {
+              "roll": "2d4"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Invisibilidade",
+        "description": "Fica invisível por 1 minuto ou até fazer uma ação. Os oponentes podem percebê-lo com um teste de Percepção com dificuldade igual a sua Sorte",
+        "action_type": "action",
+        "concentration_flag": true,
+        "level": 3,
+        "category": "buff",
+        "uses": 3,
+        "duration": 10,
+        "test": "SOR",
+        "test_description": "Teste Percepção"
+      },
+      {
+        "name": "Refratar",
+        "description": "fica invisível por 1 minuto - ver com percepçao >= int",
+        "action_type": "action",
+        "level": 7,
+        "category": "buff",
+        "uses": 1,
+        "duration": 10,
+        "test": "INT",
+        "test_description": "Teste Perepção"
+      },
+      {
+        "name": "Crescer",
+        "description": "Durante dois turnos, seu tamanho é triplicado, sua Força é duplicada e velocidade partida pela metade. Vantagem em testes de força e atletismo, ataques normais atingem até 2 blocos juntos. Ação bônus.",
+        "action_type": "bonus_action",
+        "level": 3,
+        "category": "buff",
+        "uses": 1,
+        "duration": 2,
+        "hooks": [
+          {
+            "stat_plus": {
+              "FOR": "FOR"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Ataque Extra",
+        "description": "Ataca duas vezes, ataque normal próximo.",
+        "action_type": "single_use",
+        "level": 4,
+        "category": "buff",
+        "duration": 1,
+        "uses": 4,
+        "hooks": [
+          {
+            "extra_atk": {
+              "qt": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "Surto de ação",
+        "description": "Uma vez por turno, recebe ação e ação bônus adicionais.",
+        "action_type": "single_use",
+        "level": 4,
+        "category": "buff",
+        "duration": 1,
+        "uses": 4,
+        "hooks": [
+          {
+            "extra_action": {
+              "qt": 1
+            }
+          },
+          {
+            "extra_bonus_action": {
+              "qt": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "Maromba Arcomágica",
+        "description": "pode trocar uma ação bônus por uma ação",
+        "action_type": "single_use",
+        "level": 5,
+        "category": "buff",
+        "duration": 1,
+        "uses": 5,
+        "hooks": [
+          {
+            "extra_action": {
+              "qt": 1
+            }
+          },
+          {
+            "extra_bonus_action": {
+              "qt": -1
+            }
+          }
+        ]
+      },
+      {
+        "name": "Ataque Descuidado",
+        "description": "No seu primeiro ataque corpo a corpo da batalha seu oponente tem desvantagem na defesa, mas faz com que sua defesa vire surpresa aos inimigos até seu próximo turno.",
+        "action_type": "unlimited",
+        "level": 0,
+        "category": "buff",
+        "uses": 999
+      },
+      {
+        "name": "Voo",
+        "description": "Por 10 min, pode voar até 20 metros de altura, sem carregar peso extra.",
+        "action_type": "action",
+        "concentration_flag": true,
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 100
+      },
+      {
+        "name": "Banho de Sangue",
+        "description": "+10 Força por 5 turnos, ficando imóvel e incapaz de atacar nos proximos 5",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 5,
+        "hooks": [
+          {
+            "stat_plus": {
+              "FOR": 10
+            }
+          }
+        ]
+      },
+      {
+        "name": "Intangível",
+        "description": "Fica intangível por 1 turno, golpes físicos não funcionam pode atravessar materiais concretos não mágicos.",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 1
+      },
+      {
+        "name": "Super Aquecer",
+        "description": "dura 4 turnos quem encostar recebe 2d8 de fogo. imune a fogo",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 4,
+        "hooks": [
+          {
+            "atk_bonus": {
+              "condition": "melee_atk",
+              "roll": "2d8"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Metamorfose de Umbreloth",
+        "description": "Rato [ficha do rato] - pode transformar a vontate enquanto hp_atual > hp_max - 15",
+        "action_type": "action",
+        "level": 0,
+        "category": "buff",
+        "uses": 999,
+        "duration": 999
+      },
+      {
+        "name": "Bonus inconstante",
+        "description": "d8 1(-2all) 2(-1all) 3(+1one) 4(+2one) 5(+2two) 6(+5any) 7(+6any) 8(+2all). 1 use from tatoo",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 4,
+        "duration": 10,
+        "hooks": [
+          {
+            "inc_bonus": {}
+          }
+        ]
+      },
+      {
+        "name": "Esmagar",
+        "description": "Suas mãos e pés crescem bizarramente. Com um pulo de até 4 blocos, você cai com suas mãos crescidas em 4 blocos à sua frente, formando um quadrado, causando 2d20 de dano nesta área.",
+        "action_type": "action",
+        "level": 0,
+        "category": "attack",
+        "dmg_type": "blunt",
+        "uses": 1,
+        "roll": "2d20"
+      },
+      {
+        "name": "Contragolpe",
+        "description": "Contra ataque, com usando reacao, próximo bônus ao defender com d20 crítico.",
+        "action_type": "reaction",
+        "level": 0,
+        "category": "action",
+        "uses": 999
+      },
+      {
+        "name": "Trovão",
+        "description": "Dispara um trovão em um alvo, teste de velocidade com dificuldade igual a sua Sorte. O alvo recebe 4d6 + 5d4 de dano elétrico e metade disso se escapar.",
+        "action_type": "action",
+        "level": 8,
+        "category": "attack",
+        "dmg_type": "electric",
+        "uses": 3,
+        "duration": 0,
+        "roll": "4d6 + 5d4",
+        "test": "SOR",
+        "test_description": "TR Velocidade"
+      },
+      {
+        "name": "Dado Selvagem",
+        "description": "Você roda uma vez na tabela de magia selvagem.",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Mão Mágica",
+        "description": "Uma mão espectral que pode cumprir pequenas tarefas. Carrega até 5 pesos mas não pode atacar. Dependem de sua concentração.",
+        "action_type": "action",
+        "concentration_flag": true,
+        "level": 0,
+        "category": "buff",
+        "uses": 999,
+        "duration": 999
+      },
+      {
+        "name": "Metamorpholho",
+        "description": "Durante 10 minutos, você pode enxergar em um dos seguintes\nestilos: Visão noturna superior | Ver coisas invisíveis | Visão Térmica | Ver através de\nparedes ou objetos | Visão Ampliada em até 50m | Visão Mágica | Visão Astral.",
+        "action_type": "action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 100
+      },
+      {
+        "name": "Mestre de Batalha - Contra-Ataque",
+        "description": "Se não levar dano de um ataque, pode atacar de volta.",
+        "action_type": "reaction",
+        "level": 0,
+        "category": "action",
+        "uses": 4
+      },
+      {
+        "name": "Mestre de Batalha - Derrubar",
+        "description": "Se der dano, pode tentar derrubar TR dif FOR(30) falha-> caído",
+        "action_type": "unlimited",
+        "level": 0,
+        "category": "action",
+        "uses": 4,
+        "test": "FOR",
+        "test_description": "Teste Atletismo"
+      },
+      {
+        "name": "Desejo de viver",
+        "description": "quando ficar sem vida volta com um de vida.",
+        "action_type": "passive",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "revive": {
+              "hp": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "Por pouco",
+        "description": "evita o dano de um ataque e teleporta por perto.",
+        "action_type": "reaction",
+        "level": 0,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Em guarda",
+        "description": "vantagem na defesa como acao bônus",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 2,
+        "duration": 1,
+        "hooks": [
+          {
+            "def_adv": {}
+          }
+        ]
+      },
+      {
+        "name": "Escudo",
+        "description": "Com uma reação, um escudo arcano o envolve, defendendo até 20hp. O\nescudo dura até o início do seu próximo turno.",
+        "action_type": "reaction",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 1,
+        "hooks": [
+          {
+            "shield": {
+              "shield": 20
+            }
+          }
+        ]
+      },
+      {
+        "name": "Contramágica",
+        "description": "countera magia",
+        "action_type": "reaction",
+        "level": 4,
+        "category": "action",
+        "uses": 2,
+        "test": "15"
+      },
+      {
+        "name": "Recuperara Fôlego",
+        "description": "acao bonus, recupera 2d10 de vida.",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 1,
+        "hooks": [
+          {
+            "heal": {
+              "roll": "2d10"
+            }
+          }
+        ]
+
+      },
+      {
+        "name": "Restaurar",
+        "description": "Seu sangue esquenta e seus ferimentos cicatrizam um pouco mais rápido. Cura 3d4 de vida.",
+        "action_type": "action",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 1,
+        "hooks": [
+          {
+            "heal": {
+              "roll": "3d4"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Recuperação Arcana",
+        "description": "Recupera um ponto de uma magia à sua escolha",
+        "action_type": "action",
+        "level": 2,
+        "category": "buff",
+        "uses": 2,
+        "duration": 1,
+        "hooks": [
+          {
+            "recharge_spell": {
+              "qt": 1
+            }
+          }
+        ]
+      },
+      {
+        "name": "Descansar os Ombros",
+        "description": "Durante um descanso curto, recupera uso de habilidade guerreiro.",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Segurando a Barra",
+        "description": "Em uma batalha, ação bônus, recuperar 2d4 de vida.",
+        "action_type": "bonus_action",
+        "level": 0,
+        "category": "buff",
+        "uses": 999,
+        "duration": 1,
+        "hooks": [
+          {
+            "heal": {
+              "roll": "2d4"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Sorte divina",
+        "description": "Rola novamente qualquer dado da mesa à sua escolha. 2 uses from tatoo",
+        "action_type": "unlimited",
+        "level": 0,
+        "category": "action",
+        "uses": 3
+      },
+      {
+        "name": "Analisar Bolsos",
+        "description": "Olhos rápidos e anos de treinamento te deixam ter uma ideia dos itens que o alvo está carregando consigo. Fazer um teste de Procurar com vantagem, dificuldade definida pelo DM.",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 999
+      },
+      {
+        "name": "Prestidigitação",
+        "description": "Você pode fazer um pequeno truque de levitação, seja mover um\nobjeto que esteja longe (até 5 blocos) ou fazer um objeto leve arremessado por suas mãos\nretornar à você (até 8 blocos).",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 5
+      },
+      {
+        "name": "Mensagem",
+        "description": "Envia mensagem a criatura próxima ou alguém aberto à você, pode ter até 20 palavras, permitindo resposta de 20 palavras.",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 2
+      },
+      {
+        "name": "Mini Portal",
+        "description": "dois portais 15cm raio a até 10 blocos de distância, dura d8 min/concentração",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Dissipar Magia",
+        "description": "Qualquer magia lv3 ou inferior termina. para magias mais fortes, TH = inteligencia do alvo",
+        "action_type": "action",
+        "level": 0,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Recolocação",
+        "description": "troca de lugar com o alvo se ele falhar em um teste de int ou arcana = int",
+        "action_type": "action",
+        "level": 7,
+        "category": "action",
+        "uses": 1
+      },
+      {
+        "name": "Ombros Livres",
+        "description": "Você ganha defesa enquanto estiver sem armadura, baseado em sua Resistência",
+        "action_type": "passive",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "def_bonus": {
+              "roll": "2d8 + 2"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Movimento Veloz",
+        "description": "Seu deslocamento aumenta em 3 metros (2 blocos) se não estiver usando armadura.",
+        "action_type": "passive",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "stat_plus": {
+              "move_speed": 3
+            }
+          }
+        ]
+      },
+      {
+        "name": "Trocar Ação - 2 bônus para 1 ação",
+        "description": "Pode trocar uma ação por duas ações bônus ou duas ações\nbônus por uma ação normal.",
+        "action_type": "unlimited",
+        "level": 0,
+        "category": "buff",
+        "uses": 999,
+        "duration": 1,
+        "hooks": [
+          {
+            "extra_action": {
+              "qt": 1
+            }
+          },
+          {
+            "extra_bonus_action": {
+              "qt": -2
+            }
+          }
+        ]
+      },
+      {
+        "name": "Trocar Ação - 1 ação para 2 bônus",
+        "description": "Pode trocar uma ação por duas ações bônus ou duas ações\nbônus por uma ação normal.",
+        "action_type": "unlimited",
+        "level": 0,
+        "category": "buff",
+        "uses": 999,
+        "duration": 1,
+        "hooks": [
+          {
+            "extra_action": {
+              "qt": -1
+            }
+          },
+          {
+            "extra_bonus_action": {
+              "qt": 2
+            }
+          }
+        ]
+      },
+      {
+        "name": "Autoconfiança",
+        "description": "adicione ⅓ do seu Carisma na sua defesa caso esteja sem escudo e\nsem armadura (exceto armadura leve).",
+        "action_type": "passive",
+        "level": 6,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "def_bonus": {
+              "roll": "CAR//3"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Defesa com lâminas",
+        "description": "+2d6 na defesa se estiver usando as Black Wings",
+        "action_type": "passive",
+        "level": 6,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "def_bonus": {
+              "roll": "2d6"
+            }
+          }
+        ]
+      }
+    ],
+    "traits": [
+      {
+        "name": "Encouraçado",
+        "description": "Encouraçado - + 1d6 bônus de defesa",
+        "action_type": "passive",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "def_bonus": {
+              "roll": "1d6"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Um com o Todo",
+        "description": "Você medita constantemente por toda sua vida, e,\nfinalmente, tudo faz mais sentido. Suas rolagens de ataque ganham d20\nadicional e seu dado de defesa duplica. Ao usar Habilidades, você tem um d6\npara aplicar, seja aumentando ou reduzindo dificuldades, danos ou alvos (neste\ncaso dividindo o efeito ou dano pela quantidade). Você pode rolar o d6 antes de\ndecidir como vai aplicá-lo.",
+        "action_type": "passive",
+        "level": 0,
+        "category": "buff",
+        "uses": 1,
+        "duration": 999,
+        "hooks": [
+          {
+            "atk_bonus": {
+              "roll": "d20"
+            }
+          },
+          {
+            "def_bonus": {
+              "roll": "d20"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
